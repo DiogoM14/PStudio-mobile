@@ -10,7 +10,6 @@ export function BottomNavigator() {
   const Tab = createBottomTabNavigator();
 
   return (
-    <NavigationContainer independent={true}>
       <Tab.Navigator screenOptions={{ headerShown: false, tabBarShowLabel: false }}>
         <Tab.Screen 
           name="Home" 
@@ -46,6 +45,5 @@ export function BottomNavigator() {
           }}
         />
       </Tab.Navigator>
-    </NavigationContainer>
   );
 }
