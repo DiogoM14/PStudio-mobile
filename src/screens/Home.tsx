@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import { ImageCard } from "../components/ImageCard";
 
 import { api } from "../service/axios";
 import { IImage } from "../utils/IImage";
+import { Ionicons } from "@expo/vector-icons";
 
 export function Home() {
   const [images, setImages] = useState<IImage[]>([])
@@ -34,17 +35,26 @@ export function Home() {
 
   return (
     <View style={styles.container} >
-      <Text style={styles.logo}>PStudio</Text>
-      <Text style={styles.slogan}>A melhor galeria do mundo</Text>
+      <View style={styles.header}>
+        <View>
+          <Text style={styles.logo}>PStudio</Text>
+          <Text style={styles.slogan}>A melhor galeria do mundo</Text>
+        </View>
 
-      <ScrollView style={styles.buttons} horizontal showsHorizontalScrollIndicator={false}>
-        { categories.map((category) => (
-          <TouchableOpacity style={styles.button} onPress={handleNavigateToImages}>
-            <Text style={styles.buttonText}>{category}</Text>
-          </TouchableOpacity>
-        )) }
+        <View style={styles.user}>
+          <Image style={styles.avatar} source={{ uri: "http://github.com/diogom14.png" }} />
+        </View>
+      </View>
 
-      </ScrollView>
+      <View>
+        <ScrollView style={styles.buttons} horizontal showsHorizontalScrollIndicator={false}>
+          { categories.map((category) => (
+            <TouchableOpacity style={styles.button} onPress={handleNavigateToImages} activeOpacity={0.7}>
+              <Text style={styles.buttonText}>{category}</Text>
+            </TouchableOpacity>
+          )) }
+        </ScrollView>
+      </View>
 
       <FlatList 
         data={images}
@@ -61,6 +71,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#F0F4F4',
     paddingHorizontal: 24,
   },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   logo: {
     fontWeight: "700",
     fontSize: 32,
@@ -69,6 +84,14 @@ const styles = StyleSheet.create({
   slogan: {
     fontSize: 14,
     color: "#3a3a3a",
+  },
+  user: {
+
+  },
+  avatar: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
   },
   buttons: {
     marginTop: 28,
