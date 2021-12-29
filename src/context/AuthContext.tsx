@@ -19,7 +19,7 @@ type SignInData = {
 
 type AuthContexType = {
     isAuthenticated: boolean,
-    signIn: (data: SignInData) => Promise<void>
+    signIn: any
     user: any,
     signOut: any
 }
@@ -27,17 +27,12 @@ type AuthContexType = {
 export const AuthContext = createContext({} as AuthContexType)
 
 export function AuthProvider({ children }: any) {
-
     const [user, setUser] = useState<User | null>(null)
-    // const { navigate } = useNavigation();
 
     const isAuthenticated = !!user
 
-
     useEffect(() => {
-        const token = AsyncStorage.getItem('@token')
-
-        if (token) {
+        AsyncStorage.getItem('@token').then(token => {
             api.get('/me', {
                 headers: {
                     'x-access-token': token
@@ -46,14 +41,15 @@ export function AuthProvider({ children }: any) {
                 const { _id, email, firstName, lastName, avatar, userType } = response.data
                 setUser({ _id, email, firstName, lastName, avatar, userType })
             })
-        }
+        }).catch(err => console.log(err))
+
     }, [])
 
     async function signIn({ email, password }: any) {
       try {
           const response = await api.post('/auth/login', {
               email: email,
-              password: password
+              password: password,
           })
   
           await AsyncStorage.setItem('@token', response.data)
@@ -65,7 +61,6 @@ export function AuthProvider({ children }: any) {
           }).then(response => {
               const { _id, email, firstName, lastName, avatar, userType } = response.data
               setUser({ _id, email, firstName, lastName, avatar, userType })
-            //   navigate("ForgotPassword")
           })
       } catch (err) {
           console.log(err)

@@ -182,8 +182,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: "500",
-    marginBottom: 62,
-    fontFamily: "Courier New",
+    marginBottom: 62
   },
   input: {
     width: "100%",

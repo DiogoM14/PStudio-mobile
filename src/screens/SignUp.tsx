@@ -1,20 +1,33 @@
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
-import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
 import { useForm, Controller } from "react-hook-form";
+import { api } from "../service/axios";
 
 export function SignUp() {
-  // const { navigate } = useNavigation()
-
-  // const { signUp } = useContext(AuthContext)
+  const { navigate } = useNavigation()
 
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
       firstName: '',
-      lastName: ''
+      lastName: '',
+      password: '',
+      email: '',
     }
   });
+
+  const onSubmit = async (data: any) => {
+      const newUser = {
+          email: data.email,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          password: data.password
+      }
+      await api.post('/auth/register', newUser)
+          .then(res => {
+            navigate("SignIn" as never)
+          })
+          .catch(err => console.log(err))
+  }
 
   return (
     <View style={styles.container}>
@@ -51,7 +64,7 @@ export function SignUp() {
             value={value}
           />
         )}
-        name="firstName"
+        name="lastName"
       />
       {errors.firstName && <Text>This is required.</Text>}
 
@@ -69,7 +82,7 @@ export function SignUp() {
             value={value}
           />
         )}
-        name="firstName"
+        name="email"
       />
       {errors.firstName && <Text>This is required.</Text>}
 
@@ -85,13 +98,14 @@ export function SignUp() {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
+            secureTextEntry={true}
           />
         )}
-        name="lastName"
+        name="password"
       />
 
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Registo</Text>
+      <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
+        <Text style={styles.buttonText}>Registar</Text>
       </TouchableOpacity>
     </View>
   )

@@ -2,36 +2,82 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { Controller, useForm } from "react-hook-form";
+
+interface FormProps {
+  email: string
+  password: string
+}
 
 export function SignIn() {
   const { navigate } = useNavigation()
-
   const { signIn } = useContext(AuthContext)
+
+  const { control, handleSubmit, formState: { errors } } = useForm({
+    defaultValues: {
+      email: '',
+      password: ''
+    }
+  });
+
+  function onSubmit({ email, password }: FormProps) {
+    signIn({ email, password }).then(() => {
+      navigate("BottomNavigator" as never)
+    })
+  }
+
+  function handleGoToRegister() {
+    navigate("SignUp" as never)
+  }
 
   return (
     <View style={styles.container}>
-      {/* <Image 
-        source={require("../assets/images/login.png")}
-        style={styles.image}
-      /> */}
-
       <Text style={styles.title}>Efetuar autenticação</Text>
 
-      <TextInput 
-        style={styles.input}
-        placeholder="E-mail" 
-      />
-      <TextInput 
-        style={styles.input}
-        placeholder="Palavra-passe" 
+      <Controller
+        control={control}
+        rules={{
+         required: true,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput 
+            keyboardType="email-address"
+            style={styles.input}
+            placeholder="E-mail" 
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+        name="email"
       />
 
-      <TouchableOpacity style={styles.button} onPress={signIn}>
+      <Controller
+        control={control}
+        rules={{
+         required: true,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput 
+            style={styles.input}
+            placeholder="Palavra-passe" 
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            secureTextEntry={true}
+          />
+        )}
+        name="password"
+      />
+
+      <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
 
       <Text style={styles.goToRegister}>Ainda não tem conta?</Text>
-      <Text style={styles.goToRegister}>Clique aqui para registar</Text>
+      <TouchableOpacity onPress={handleGoToRegister}>
+        <Text style={styles.goToRegister}>Clique aqui para registar</Text>
+      </TouchableOpacity>
     </View>
   )
 }

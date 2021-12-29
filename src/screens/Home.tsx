@@ -13,13 +13,18 @@ export function Home() {
   const [categories, setCategories] = useState<string[]>([])
   const { navigate } = useNavigation();
 
-  const { user } = useContext(AuthContext)
+  const { user, signOut } = useContext(AuthContext)
 
   function handleNavigateToLogin() {
-    navigate("SignIn");
+    navigate("SignIn" as never);
+  }
+
+  function handleSignOut() {
+    signOut()
   }
 
   useEffect(() => {
+    
     api
       .get("/images")
       .then((response) => setImages(response.data))
@@ -43,8 +48,8 @@ export function Home() {
           <Text style={styles.slogan}>A melhor galeria do mundo</Text>
         </View>
 
-        <TouchableOpacity style={styles.user} onPress={handleNavigateToLogin}>
-          <Image style={styles.avatar} source={{ uri: "http://github.com/diogom14.png" }} />
+        <TouchableOpacity style={styles.user} onPress={handleSignOut}>
+          <Image style={styles.avatar} source={{ uri: user?.avatar }} />
         </TouchableOpacity>
       </View>
 
@@ -58,9 +63,9 @@ export function Home() {
         </ScrollView>
       </View>
 
-      { user && <Text>{user.name}</Text> }
-
       <FlatList 
+        style={{ marginBottom: 140 }}
+        showsVerticalScrollIndicator={false}
         data={images}
         keyExtractor={(item) => item.imageCDN}
         renderItem={({ item }) => <ImageCard key={item.imageCDN} image={item} />}
@@ -105,9 +110,9 @@ const styles = StyleSheet.create({
     marginRight: 8,
     backgroundColor: "#14387B",
     paddingVertical: 12,
-    paddingHorizontal: 22,
     borderRadius: 8,
-    
+    width: 130,
+    alignItems: "center",
   },
   buttonText: {
     color: "#FFF",
