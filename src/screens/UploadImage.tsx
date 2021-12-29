@@ -43,16 +43,16 @@ export function UploadImage() {
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            placeholder="Apelido"
+            placeholder="Descrição"
             style={styles.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
           />
         )}
-        name="firstName"
+        name="description"
       />
-      {errors.firstName && <Text>This is required.</Text>}
+      {errors.description && <Text>This is required.</Text>}
 
       <Controller
         control={control}
@@ -61,16 +61,16 @@ export function UploadImage() {
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            placeholder="E-mail"
+            placeholder="Tags"
             style={styles.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
           />
         )}
-        name="firstName"
+        name="tags"
       />
-      {errors.firstName && <Text>This is required.</Text>}
+      {errors.tags && <Text>This is required.</Text>}
 
       <Controller
         control={control}
@@ -79,15 +79,86 @@ export function UploadImage() {
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            placeholder="Password"
+            placeholder="Preço"
             style={styles.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
           />
         )}
-        name="lastName"
+        name="price"
       />
+      {errors.price && <Text>This is required.</Text>}
+
+      <Controller
+        control={control}
+        rules={{
+         maxLength: 100,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            placeholder="Ano"
+            style={styles.input}
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+        name="year"
+      />
+      {errors.year && <Text>This is required.</Text>}
+
+      <Controller
+        control={control}
+        rules={{
+         maxLength: 100,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            placeholder="Tipo de Imagem"
+            style={styles.input}
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+        name="imageType"
+      />
+      {errors.imageType && <Text>This is required.</Text>}<Controller
+        control={control}
+        rules={{
+         maxLength: 100,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            placeholder="Tipo de Imagem"
+            style={styles.input}
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+        name="imageType"
+      />
+      {errors.imageType && <Text>This is required.</Text>}
+
+      <Controller
+        control={control}
+        rules={{
+         maxLength: 100,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            placeholder="Categoria"
+            style={styles.input}
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+        name="category"
+      />
+      {errors.category && <Text>This is required.</Text>}
 
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Registo</Text>
