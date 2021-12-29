@@ -1,16 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import { useNavigation } from '@react-navigation/native'
 
-export function Images() {
-  const { goBack } = useNavigation()
-
-  function handleGoBack() {
-    goBack()
-  }
-  
+export function Images() {  
   return (
     <View style={styles.container}>
-      <Text onPress={handleGoBack}>Go back</Text>
+      <Text>Go back</Text>
     </View>
   )
 }

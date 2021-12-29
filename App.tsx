@@ -1,11 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import { StackNavigator } from './src/routes/StackNavigator';
+import { AuthProvider } from './src/context/AuthContext';
+import { Routes } from './src/routes';
+import 'react-native-gesture-handler';
 
 export default function App() {
   return (
-    <>
-      <StackNavigator />
+    <AuthProvider>
+      <Routes />
       <StatusBar style="auto" />
-    </>
+    </AuthProvider>
   );
 }

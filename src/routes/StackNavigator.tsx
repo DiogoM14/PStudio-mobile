@@ -10,7 +10,7 @@ import { SignUp } from '../screens/SignUp';
 import { ForgotPassword } from '../screens/ForgotPassword';
 
 export function StackNavigator() {
-  const Stack = createNativeStackNavigator();
+  const { Navigator, Screen } = createNativeStackNavigator();
 
   return (
     <View style={{ 
@@ -19,13 +19,13 @@ export function StackNavigator() {
       paddingTop: getStatusBarHeight() + 26,
     }}>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Images" component={Images} />
-          <Stack.Screen name="SignIn" component={SignIn} />
-          <Stack.Screen name="SignUp" component={SignUp} />
-          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-          <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
-        </Stack.Navigator>
+        <Navigator screenOptions={{ headerShown: false }} initialRouteName={"SignIn"}>
+          {/* <Screen name="Images" component={Images} /> */}
+          <Screen name="SignIn" component={SignIn} />
+          <Screen name="SignUp" component={SignUp} />
+          <Screen name="ForgotPassword" component={ForgotPassword} />
+          <Screen name="BottomNavigator" component={BottomNavigator}  />
+        </Navigator>
       </NavigationContainer>
     </View>
   )

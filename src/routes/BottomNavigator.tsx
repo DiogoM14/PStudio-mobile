@@ -1,5 +1,4 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
 import { Home } from "../screens/Home";
@@ -7,11 +6,12 @@ import { Profile } from "../screens/Profile";
 import { UploadImage } from "../screens/UploadImage";
 
 export function BottomNavigator() {
-  const Tab = createBottomTabNavigator();
+  const { Navigator, Screen } = createBottomTabNavigator();
 
   return (
-      <Tab.Navigator screenOptions={{ headerShown: false, tabBarShowLabel: false }}>
-        <Tab.Screen 
+    <>
+      <Navigator screenOptions={{ headerShown: false, tabBarShowLabel: false }}>
+        <Screen 
           name="Home" 
           component={Home} 
           options={{
@@ -22,7 +22,7 @@ export function BottomNavigator() {
             }
           }}
         />
-        <Tab.Screen 
+        <Screen 
           name="UploadImage" 
           component={UploadImage} 
           options={{
@@ -33,7 +33,7 @@ export function BottomNavigator() {
             }
           }}
         />
-        <Tab.Screen 
+        <Screen 
           name="Profile" 
           component={Profile} 
           options={{
@@ -44,6 +44,7 @@ export function BottomNavigator() {
             }
           }}
         />
-      </Tab.Navigator>
+      </Navigator>
+    </>
   );
 }

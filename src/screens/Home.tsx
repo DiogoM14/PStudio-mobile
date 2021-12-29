@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -6,15 +6,17 @@ import { ImageCard } from "../components/ImageCard";
 
 import { api } from "../service/axios";
 import { IImage } from "../utils/IImage";
-import { Ionicons } from "@expo/vector-icons";
+import { AuthContext } from "../context/AuthContext";
 
 export function Home() {
   const [images, setImages] = useState<IImage[]>([])
   const [categories, setCategories] = useState<string[]>([])
   const { navigate } = useNavigation();
 
-  function handleNavigateToImages() {
-    // navigate("Images" as never);
+  const { user } = useContext(AuthContext)
+
+  function handleNavigateToLogin() {
+    navigate("SignIn");
   }
 
   useEffect(() => {
@@ -41,20 +43,22 @@ export function Home() {
           <Text style={styles.slogan}>A melhor galeria do mundo</Text>
         </View>
 
-        <View style={styles.user}>
+        <TouchableOpacity style={styles.user} onPress={handleNavigateToLogin}>
           <Image style={styles.avatar} source={{ uri: "http://github.com/diogom14.png" }} />
-        </View>
+        </TouchableOpacity>
       </View>
 
       <View>
         <ScrollView style={styles.buttons} horizontal showsHorizontalScrollIndicator={false}>
           { categories.map((category) => (
-            <TouchableOpacity style={styles.button} onPress={handleNavigateToImages} activeOpacity={0.7}>
+            <TouchableOpacity key={category} style={styles.button} activeOpacity={0.7}>
               <Text style={styles.buttonText}>{category}</Text>
             </TouchableOpacity>
           )) }
         </ScrollView>
       </View>
+
+      { user && <Text>{user.name}</Text> }
 
       <FlatList 
         data={images}
