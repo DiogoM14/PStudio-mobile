@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { RefreshControl } from 'react-native'
 import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -12,6 +13,7 @@ export function Home() {
   const [images, setImages] = useState<IImage[]>([])
   const [categories, setCategories] = useState<string[]>([])
   const { navigate } = useNavigation();
+  const [refreshing, setRefreshing] = useState(false);
 
   const { user, signOut } = useContext(AuthContext)
 
@@ -22,6 +24,21 @@ export function Home() {
   function handleSignOut() {
     signOut()
   }
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    
+    api
+    .get("/images")
+    .then((response) => setImages(response.data))
+    .catch((err) => {
+        console.error("ops! ocorreu um erro " + err)
+    })
+
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  };
 
   useEffect(() => {
     
@@ -41,7 +58,7 @@ export function Home() {
   }, []);
 
   return (
-    <View style={styles.container} >
+    <View style={styles.container}>
       <View style={styles.header}>
         <View>
           <Text style={styles.logo}>PStudio</Text>
@@ -64,6 +81,10 @@ export function Home() {
       </View>
 
       <FlatList 
+          refreshControl={
+            <RefreshControl refreshing={refreshing} 
+              onRefresh={onRefresh} />
+          }
         style={{ marginBottom: 140 }}
         showsVerticalScrollIndicator={false}
         data={images}

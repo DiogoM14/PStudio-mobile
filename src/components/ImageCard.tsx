@@ -14,7 +14,7 @@ export function ImageCard({ image }: Props) {
       />
 
       <View style={styles.category}>
-        <Text>{image.category}</Text>
+        <Text>{image.category[0]} + {image.category.length - 1}</Text>
       </View>
 
       <View style={styles.description}>
