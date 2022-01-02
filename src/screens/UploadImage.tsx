@@ -1,13 +1,16 @@
+import { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Button, Image, ScrollView } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { useForm, Controller } from "react-hook-form";
-import { useContext, useEffect, useState } from "react";
+
 import * as ImagePicker from 'expo-image-picker';
-import { ref, storage, uploadBytesResumable, getDownloadURL, getBlob } from '../service/firebase'
-import { api } from "../service/axios";
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Ionicons } from '@expo/vector-icons'
+
+import { ref, storage, uploadBytesResumable, getDownloadURL } from '../service/firebase'
+import { api } from "../service/axios";
 import { AuthContext } from "../context/AuthContext";
-import { AntDesign, Ionicons } from '@expo/vector-icons'
+
 
 export function UploadImage() {  
   const { navigate } = useNavigation()

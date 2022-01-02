@@ -1,10 +1,16 @@
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { useForm, Controller } from "react-hook-form";
+import { Feather } from "@expo/vector-icons";
+
 import { api } from "../service/axios";
 
 export function SignUp() {
-  const { navigate } = useNavigation()
+  const { navigate, goBack } = useNavigation()
+
+  function handleGoBack() {
+    goBack()
+  }
 
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
@@ -31,78 +37,89 @@ export function SignUp() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Efetuar Registo</Text>
-      <Controller
-        control={control}
-        rules={{
-         required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            placeholder="Primeiro Nome"
-            style={styles.input}
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        name="firstName"
-      />
-      {errors.firstName && <Text>This is required.</Text>}
+      <TouchableOpacity activeOpacity={0.7} onPress={handleGoBack}>
+        <Feather name="arrow-left" size={24} color="#303030" style={{ marginBottom: 16 }} />
+      </TouchableOpacity>
 
-      <Controller
-        control={control}
-        rules={{
-         required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            placeholder="Apelido"
-            style={styles.input}
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        name="lastName"
-      />
-      {errors.firstName && <Text>This is required.</Text>}
+      <View>
+        <Text style={styles.title}>Vamos entrar.</Text>
+        <Text style={styles.subtitle}>Bem vindo de volta.</Text>
+        <Text style={styles.subtitle}>Sentimos a tua falta!</Text>
+      </View>
 
-      <Controller
-        control={control}
-        rules={{
-         required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            placeholder="E-mail"
-            style={styles.input}
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        name="email"
-      />
-      {errors.firstName && <Text>This is required.</Text>}
+      <ScrollView style={styles.inputGroup}>
+        <Controller
+          control={control}
+          rules={{
+          required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              placeholder="Primeiro Nome"
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name="firstName"
+        />
+        {errors.firstName && <Text>This is required.</Text>}
 
-      <Controller
-        control={control}
-        rules={{
-         maxLength: 100,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            placeholder="Password"
-            style={styles.input}
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            secureTextEntry={true}
-          />
-        )}
-        name="password"
-      />
+        <Controller
+          control={control}
+          rules={{
+          required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              placeholder="Apelido"
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name="lastName"
+        />
+        {errors.firstName && <Text>This is required.</Text>}
+
+        <Controller
+          control={control}
+          rules={{
+          required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              placeholder="E-mail"
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name="email"
+        />
+        {errors.firstName && <Text>This is required.</Text>}
+
+        <Controller
+          control={control}
+          rules={{
+          maxLength: 100,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              placeholder="Password"
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              secureTextEntry={true}
+            />
+          )}
+          name="password"
+        />
+      </ScrollView>
 
       <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
         <Text style={styles.buttonText}>Registar</Text>
@@ -114,39 +131,43 @@ export function SignUp() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#F0F4F4", 
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 24
-  },
-  image: {
-    width: 200,
-    height: 200,
+    paddingHorizontal: 24,
+    flex: 1
   },
   title: {
+    fontSize: 32,
+    fontFamily: "Ubuntu_500Medium",
+    marginBottom: 12
+  },
+  subtitle: {
     fontSize: 28,
-    fontWeight: "500",
-    marginBottom: 62
+    fontFamily: "Ubuntu_400Regular",
+  },
+  inputGroup: {
+    marginTop: 38,
   },
   input: {
     width: "100%",
-    height: 44,
+    height: 60,
     backgroundColor: "#fff",
     marginBottom: 16,
     paddingHorizontal: 12,
     borderRadius: 8,
   },
   button: {
+    position: "absolute",
+    bottom: 0,
     backgroundColor: "#14387B",
-    borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    marginBottom: 16,
+    borderRadius: 12,
+    height: 60,
+    width: "100%",
+    alignItems: "center",
+    margin: 24,
+    justifyContent: "center"
   },
   buttonText: {
-    color: "#FFF",
-  },
-  goToRegister: {
-    color: "#3a3a3a",
+    color: "#fff",
+    fontWeight: "500",
+    fontFamily: "Ubuntu_500Medium",
   }
 })
