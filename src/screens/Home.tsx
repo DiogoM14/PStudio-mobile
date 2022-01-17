@@ -16,12 +16,12 @@ export function Home() {
 
   const onRefresh = () => {
     setRefreshing(true);
-    
+
     api.get("/images")
-    .then((response) => setImages(response.data))
-    .catch((err) => {
+      .then((response) => setImages(response.data))
+      .catch((err) => {
         console.error("ops! ocorreu um erro " + err)
-    })
+      })
 
     setTimeout(() => {
       setRefreshing(false);
@@ -29,27 +29,26 @@ export function Home() {
   };
 
   useEffect(() => {
-
     api
       .get("/categories")
       .then((response) => setCategories(response.data))
       .catch((err) => {
-          console.error("ops! ocorreu um erro " + err)
+        console.error("ops! ocorreu um erro " + err)
       })
 
     api.get("/images")
-    .then((response) => setImages(response.data))
-    .catch((err) => {
+      .then((response) => setImages(response.data))
+      .catch((err) => {
         console.error("ops! ocorreu um erro " + err)
-    })
+      })
   }, []);
 
   return (
-    <ScrollView 
+    <ScrollView
       style={styles.container}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }  
+      }
     >
       <Header />
 
@@ -57,9 +56,9 @@ export function Home() {
 
       <CategoryButtons categories={categories} />
 
-      { images.map((image: any) => (
+      {images.map((image: any) => (
         <ImageCard key={image.imageCDN} image={image} />
-      )) }
+      ))}
 
     </ScrollView>
   )

@@ -9,6 +9,7 @@ import { SignUp } from '../screens/SignUp';
 import { ForgotPassword } from '../screens/ForgotPassword';
 import { AuthContext } from '../context/AuthContext';
 import { WelcomingScreen } from '../screens/WelcomingScreen';
+import { AllCategories } from '../screens/AllCategories';
 
 
 export function AuthRoutes() {
@@ -21,7 +22,8 @@ export function AuthRoutes() {
       <Screen name="SignIn" component={SignIn} />
       <Screen name="SignUp" component={SignUp} />
       <Screen name="ForgotPassword" component={ForgotPassword} />
-      <Screen name="BottomNavigator" component={BottomNavigator}  />
+      <Screen name="BottomNavigator" component={BottomNavigator} />
+      <Screen name="AllCategories" component={AllCategories} />
     </Navigator>
   )
 }
