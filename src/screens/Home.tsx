@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { RefreshControl } from 'react-native'
-import { FlatList, StyleSheet, View } from "react-native";
+import { RefreshControl, ScrollView, StyleSheet } from 'react-native'
 
 import { ImageCard } from "../components/ImageCard";
 
@@ -8,6 +7,7 @@ import { api } from "../service/axios";
 import { IImage } from "../utils/IImage";
 import { Header } from "../components/Home/Header";
 import { CategoryButtons } from "../components/CategoryButtons";
+import { Spotlights } from "../components/Home/Spotlights";
 
 export function Home() {
   const [images, setImages] = useState<IImage[]>([])
@@ -45,24 +45,23 @@ export function Home() {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <ScrollView 
+      style={styles.container}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }  
+    >
       <Header />
+
+      <Spotlights />
 
       <CategoryButtons categories={categories} />
 
-      <FlatList 
-        refreshControl={
-          <RefreshControl refreshing={refreshing} 
-            onRefresh={onRefresh} 
-          />
-        }
-        style={{ marginBottom: 140 }}
-        showsVerticalScrollIndicator={false}
-        data={images}
-        keyExtractor={(item) => item.imageCDN}
-        renderItem={({ item }) => <ImageCard key={item.imageCDN} image={item} />}
-      />
-    </View>
+      { images.map((image: any) => (
+        <ImageCard key={image.imageCDN} image={image} />
+      )) }
+
+    </ScrollView>
   )
 }
 

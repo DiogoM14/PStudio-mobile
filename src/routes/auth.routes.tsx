@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 const { Navigator, Screen } = createStackNavigator()
 
 import { BottomNavigator } from './BottomNavigator';
-import { Images } from '../screens/Images';
+import { ImageDetails } from '../screens/ImageDetails';
 import { SignIn } from '../screens/SignIn';
 import { SignUp } from '../screens/SignUp';
 import { ForgotPassword } from '../screens/ForgotPassword';
@@ -15,9 +15,9 @@ export function AuthRoutes() {
   const { isAuthenticated } = useContext(AuthContext)
 
   return (
-    <Navigator screenOptions={{ headerShown: false }} initialRouteName={isAuthenticated ? "BottomNavigator" : 'Welcoming'} >
+    <Navigator screenOptions={{ headerShown: false }} initialRouteName={"BottomNavigator"} >
       <Screen name="Welcoming" component={WelcomingScreen} />
-      <Screen name="Images" component={Images} />
+      <Screen name="ImageDetails" component={ImageDetails} />
       <Screen name="SignIn" component={SignIn} />
       <Screen name="SignUp" component={SignUp} />
       <Screen name="ForgotPassword" component={ForgotPassword} />

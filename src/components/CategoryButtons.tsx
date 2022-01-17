@@ -3,30 +3,52 @@ import { ICategories } from "../utils/ICategories";
 
 export function CategoryButtons({ categories }: ICategories) {
   return (
-    <View>
-      <ScrollView style={styles.buttons} horizontal showsHorizontalScrollIndicator={false}>
-        { categories.map((category) => (
-          <TouchableOpacity key={category} style={styles.button} activeOpacity={0.7}>
-            <Text style={styles.buttonText}>{category}</Text>
-          </TouchableOpacity>
-        )) }
-      </ScrollView>
+    <View style={styles.grid}>
+      <Text style={styles.title}>Categorias</Text>
+
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <TouchableOpacity style={styles.button} activeOpacity={0.7}>
+          <Text style={styles.buttonText}>Natureza</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button} activeOpacity={0.7}>
+          <Text style={styles.buttonText}>Natureza</Text>
+        </TouchableOpacity>
+
+      </View>
+
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <TouchableOpacity style={styles.button} activeOpacity={0.7}>
+          <Text style={styles.buttonText}>Natureza</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button} activeOpacity={0.7}>
+          <Text style={styles.buttonText}>Natureza</Text>
+        </TouchableOpacity>
+
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  buttons: {
-    marginTop: 28,
-    marginBottom: 16,
+  grid: {
+    flexDirection: "column",
+    width: "100%",
+  },
+  title: {
+    marginTop: 16,
+    fontFamily: "Roboto_500Medium",
+    fontSize: 22,
   },
   button: {
-    marginRight: 8,
     backgroundColor: "#14387B",
-    paddingVertical: 12,
     borderRadius: 8,
-    width: 130,
     alignItems: "center",
+    height: 84,
+    width: "49%",
+    marginBottom: 8,
+    justifyContent: "center",
   },
   buttonText: {
     color: "#FFF",

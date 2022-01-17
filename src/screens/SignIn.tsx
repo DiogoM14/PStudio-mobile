@@ -31,6 +31,10 @@ export function SignIn() {
     navigate("ForgotPassword" as never)
   }
 
+  function handleGoToHome() {
+    navigate("BottomNavigator" as never)
+  }
+
   function handleGoBack() {
     goBack()
   }
@@ -95,6 +99,14 @@ export function SignIn() {
         <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
           <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
+
+        <View style={styles.divider}>
+          <Text>ou</Text>
+        </View>
+
+        <TouchableOpacity style={styles.guestButton} onPress={handleGoToHome}>
+          <Text style={styles.guestButtonText}>Entrar como convidado</Text>
+        </TouchableOpacity>
       </View>
     </View>
   )
@@ -152,5 +164,27 @@ const styles = StyleSheet.create({
     marginRight: 8,
     fontFamily: "Roboto_400Regular",
     marginBottom: 12
+  },
+  guestButton: {
+    backgroundColor: "#fff",
+    borderColor: "#14387B",
+    borderWidth: 2,
+    borderRadius: 12,
+    height: 60,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 8
+  },
+  guestButtonText: {
+    color: "#303030",
+    fontWeight: "500",
+    fontFamily: "Ubuntu_500Medium",
+  },
+  divider: {
+    backgroundColor: "#6b6b6b",
+    height: 1,
+    marginVertical: 8,
+    width: 100
   }
 })

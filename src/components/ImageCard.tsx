@@ -1,4 +1,5 @@
-import { Image, StyleSheet, Text, View } from "react-native"
+import { useNavigation } from "@react-navigation/native"
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { IImage } from "../utils/IImage"
 
 interface Props {
@@ -6,8 +7,22 @@ interface Props {
 }
 
 export function ImageCard({ image }: Props) {
+  const { navigate } = useNavigation()
+
+  function handleGoToImage() {
+    navigate({
+      name: "ImageDetails" as never, 
+      params: { 
+        image: image
+      } as never})
+  }
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity 
+      style={styles.container} 
+      activeOpacity={0.7}
+      onPress={handleGoToImage}
+    >
       <Image 
         source={{uri: image.imageCDN }}
         style={styles.image}
@@ -26,7 +41,7 @@ export function ImageCard({ image }: Props) {
           <Text style={styles.price}>{image.price}€</Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
