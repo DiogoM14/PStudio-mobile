@@ -16,8 +16,6 @@ export function AllCategories() {
 
             <Header />
 
-            <AllCategoryButtons categories={categories} />
-
         </ScrollView>
     )
 }

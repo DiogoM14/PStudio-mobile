@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { RefreshControl, ScrollView, StyleSheet } from 'react-native'
+import { RefreshControl, ScrollView, StyleSheet, Text } from 'react-native'
 
 import { ImageCard } from "../components/ImageCard";
 
@@ -56,6 +56,8 @@ export function Home() {
 
       <CategoryButtons categories={categories} />
 
+      <Text style={styles.imagesTitle}>Todas as imagens</Text>
+
       {images.map((image: any) => (
         <ImageCard key={image.imageCDN} image={image} />
       ))}
@@ -67,6 +69,11 @@ export function Home() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#F0F4F4',
-    paddingHorizontal: 24,
+    paddingHorizontal: 16,
+  },
+  imagesTitle: {
+    marginBottom: 15,
+    fontFamily: "Roboto_500Medium",
+    fontSize: 22,
   }
 });

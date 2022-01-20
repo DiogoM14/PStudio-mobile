@@ -26,6 +26,7 @@ export function Spotlights() {
   return (
     <View style={styles.container}>
       <TimedSlideshow
+        index={0}
         items={items}
       />
     </View>

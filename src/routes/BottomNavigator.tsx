@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Home } from "../screens/Home";
 import { Profile } from "../screens/Profile";
 import { UploadImage } from "../screens/UploadImage";
+import { ForYou } from "../screens/ForYou";
 
 export function BottomNavigator() {
   const { Navigator, Screen } = createBottomTabNavigator();
@@ -18,6 +19,17 @@ export function BottomNavigator() {
             tabBarIcon: ({ color, size, focused }) => {
               return (
                 <Ionicons name={focused ? 'home' : 'home-outline'} size={size} color={focused ? '#14387B' : color} />
+              );
+            }
+          }}
+        />
+        <Screen 
+          name="ForYou" 
+          component={ForYou} 
+          options={{
+            tabBarIcon: ({ color, size, focused }) => {
+              return (
+                <Ionicons name={focused ? 'search' : 'search-outline'} size={32} color={focused ? '#14387B' : color} />
               );
             }
           }}
