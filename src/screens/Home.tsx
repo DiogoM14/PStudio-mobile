@@ -8,8 +8,10 @@ import { IImage } from "../utils/IImage";
 import { Header } from "../components/Home/Header";
 import { CategoryButtons } from "../components/CategoryButtons";
 import { Spotlights } from "../components/Home/Spotlights";
+import { useNavigation } from "@react-navigation/native";
 
 export function Home() {
+
   const [images, setImages] = useState<IImage[]>([])
   const [categories, setCategories] = useState<string[]>([])
   const [refreshing, setRefreshing] = useState(false);

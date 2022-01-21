@@ -10,6 +10,7 @@ import { ForgotPassword } from '../screens/ForgotPassword';
 import { AuthContext } from '../context/AuthContext';
 import { WelcomingScreen } from '../screens/WelcomingScreen';
 import { AllCategories } from '../screens/AllCategories';
+import { CategoryDetail } from '../screens/CategoryDetail';
 
 
 export function AuthRoutes() {
@@ -23,7 +24,14 @@ export function AuthRoutes() {
       <Screen name="SignUp" component={SignUp} />
       <Screen name="ForgotPassword" component={ForgotPassword} />
       <Screen name="BottomNavigator" component={BottomNavigator} />
-      <Screen name="AllCategories" component={AllCategories} />
+      <Screen name="AllCategories" component={AllCategories} options={{
+        headerShown: true,
+        title: "Categorias",
+        headerStyle: {
+          backgroundColor: '#F0F4F4',
+        },
+      }} />
+      <Screen name="CategoryDetail" component={CategoryDetail} />
     </Navigator>
   )
 }

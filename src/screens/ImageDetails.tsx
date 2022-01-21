@@ -17,7 +17,7 @@ export function ImageDetails() {
         source={{ uri: params }}
         style={styles.image}
       /> */}
-      
+
     </View>
   )
 }

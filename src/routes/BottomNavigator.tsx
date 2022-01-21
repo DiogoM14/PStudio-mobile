@@ -12,9 +12,9 @@ export function BottomNavigator() {
   return (
     <>
       <Navigator screenOptions={{ headerShown: false, tabBarShowLabel: false }}>
-        <Screen 
-          name="Home" 
-          component={Home} 
+        <Screen
+          name="Home"
+          component={Home}
           options={{
             tabBarIcon: ({ color, size, focused }) => {
               return (
@@ -23,9 +23,9 @@ export function BottomNavigator() {
             }
           }}
         />
-        <Screen 
-          name="ForYou" 
-          component={ForYou} 
+        <Screen
+          name="ForYou"
+          component={ForYou}
           options={{
             tabBarIcon: ({ color, size, focused }) => {
               return (
@@ -34,9 +34,9 @@ export function BottomNavigator() {
             }
           }}
         />
-        <Screen 
-          name="UploadImage" 
-          component={UploadImage} 
+        <Screen
+          name="UploadImage"
+          component={UploadImage}
           options={{
             tabBarIcon: ({ color, size, focused }) => {
               return (
@@ -45,9 +45,9 @@ export function BottomNavigator() {
             }
           }}
         />
-        <Screen 
-          name="Profile" 
-          component={Profile} 
+        <Screen
+          name="Profile"
+          component={Profile}
           options={{
             tabBarIcon: ({ color, size, focused }) => {
               return (

@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-nati
 import { Ionicons, FontAwesome5, MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 import { ICategories } from "../utils/ICategories";
 
-import { Header } from "../components/Home/Header";
+import { Header2 } from "../components/Home/Header2";
 import { AllCategoryButtons } from "../components/AllCategoryButtons";
 
 export function AllCategories() {
@@ -14,7 +14,8 @@ export function AllCategories() {
         <ScrollView
             style={styles.container}>
 
-            <Header />
+            <Header2 />
+            <AllCategoryButtons categories={categories} />
 
         </ScrollView>
     )

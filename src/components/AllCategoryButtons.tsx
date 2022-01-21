@@ -4,31 +4,75 @@ import { ICategories } from "../utils/ICategories";
 
 export function AllCategoryButtons({ categories }: ICategories) {
 
+    const category = [
+        {
+            name: "nature",
+            icon: "leaf"
+        },
+        {
+            name: "wallpaper",
+            icon: "leaf"
+        },
+        {
+            name: "landscape",
+            icon: "leaf"
+        },
+        {
+            name: "architecture",
+            icon: "leaf"
+        },
+        {
+            name: "fashion",
+            icon: "leaf"
+        },
+        {
+            name: "foods & drinks",
+            icon: "leaf"
+        },
+        {
+            name: "experimental",
+            icon: "leaf"
+        },
+        {
+            name: "film",
+            icon: "leaf"
+        },
+        {
+            name: "people",
+            icon: "leaf"
+        },
+        {
+            name: "travel",
+            icon: "leaf"
+        },
+        {
+            name: "animals",
+            icon: "leaf"
+        },
+        {
+            name: "arts & culture",
+            icon: "leaf"
+        },
+        {
+            name: "history",
+            icon: "leaf"
+        },
+        {
+            name: "athletics",
+            icon: "leaf"
+        },
+    ]
+
     return (
         <ScrollView style={styles.grid}>
             <Text style={styles.title}>Categorias</Text>
-
-            <View>
+            {category.map((category: any) => (
                 <TouchableOpacity style={styles.button} activeOpacity={0.7}>
-                    <Text style={styles.buttonText}>Natureza</Text>
-                    <Ionicons name="leaf" size={20} color="white" />
+                    <Text style={styles.buttonText}>{category.name}</Text>
+                    <FontAwesome5 name={category.icon} size={20} color="white" />
                 </TouchableOpacity>
+            ))}
 
-                <TouchableOpacity style={styles.button} activeOpacity={0.7}>
-                    <Text style={styles.buttonText}>Animais</Text>
-                    <MaterialCommunityIcons name="cow" size={24} color="white" />
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.button} activeOpacity={0.7}>
-                    <Text style={styles.buttonText}>História</Text>
-                    <FontAwesome5 name="monument" size={20} color="white" />
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.button} activeOpacity={0.7}>
-                    <Text style={styles.buttonText}>Moda</Text>
-                    <Feather name="more-horizontal" size={24} color="white" />
-                </TouchableOpacity>
-            </View>
         </ScrollView>
     )
 }
