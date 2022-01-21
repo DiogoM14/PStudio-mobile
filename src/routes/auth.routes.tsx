@@ -19,7 +19,13 @@ export function AuthRoutes() {
   return (
     <Navigator screenOptions={{ headerShown: false }} initialRouteName={"BottomNavigator"} >
       <Screen name="Welcoming" component={WelcomingScreen} />
-      <Screen name="ImageDetails" component={ImageDetails} />
+      <Screen name="ImageDetails" component={ImageDetails} options={{
+        headerShown: true,
+        title: "Categorias",
+        headerStyle: {
+          backgroundColor: '#F0F4F4',
+        },
+      }} />
       <Screen name="SignIn" component={SignIn} />
       <Screen name="SignUp" component={SignUp} />
       <Screen name="ForgotPassword" component={ForgotPassword} />
