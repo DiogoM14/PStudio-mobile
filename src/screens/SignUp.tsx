@@ -26,8 +26,10 @@ export function SignUp() {
           email: data.email,
           firstName: data.firstName,
           lastName: data.lastName,
-          password: data.password
+          password: data.password,
+          userType: 'user'
       }
+      
       await api.post('/auth/register', newUser)
           .then(res => {
             navigate("SignIn" as never)

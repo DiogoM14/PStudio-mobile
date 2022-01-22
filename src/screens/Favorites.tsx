@@ -22,7 +22,7 @@ export function Favorites() {
 
   const onRefresh = () => {
     setRefreshing(true);
-    
+
     AsyncStorage.getItem('@token').then((token: any) => {
       api.get("/me/images/favorites/", {headers:{"x-access-token" : token}})
       .then (
@@ -33,9 +33,9 @@ export function Favorites() {
       )
     })
 
-      setTimeout(() => {
-        setRefreshing(false);
-      }, 1000);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
   };
 
   return (
@@ -44,9 +44,10 @@ export function Favorites() {
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
+      showsVerticalScrollIndicator={false}
     >
 
-      <Text style={styles.imagesTitle}>Todas as imagens</Text>
+      <Text style={styles.imagesTitle}>Os seus favoritos</Text>
 
       {images.map((image: any) => (
         <ImageCard key={image.imageCDN} image={image} />
