@@ -3,11 +3,44 @@ import { useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { StyleSheet, View, Image, Text, ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { api } from "../service/axios";
 import { IImage } from "../utils/IImage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AxiosError } from "axios";
 
 export function ImageDetails() {
-  const [image, setImage] = useState<IImage>()
+  const [isFavorite, setIsFavorite] = useState(false)
   const { params } = useRoute()
+
+  useEffect(() => {
+    AsyncStorage.getItem('@token').then((token: any) => {
+      api.get("/me/images/favorites",  { 
+        headers: {
+          "x-access-token" : token
+        } 
+      }).then(res => {
+            res.data.flat()[0].favorites.forEach((image: any) => {
+              if(image._id == params.image._id ) {
+                setIsFavorite(true)
+              }
+            });
+          }
+        )
+    })
+  }, [])
+
+  function handleFavorite() {
+    AsyncStorage.getItem('@token').then((token: any) => {
+      api.put(`/me/images/favorites/${params.image._id}`, {}, {
+        headers: {
+          "x-access-token": token
+        }
+      })
+        .then(() => setIsFavorite(!isFavorite))
+        .catch((err: AxiosError) => console.log(err))
+    }
+    )
+  }
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -35,9 +68,16 @@ export function ImageDetails() {
       <View style={styles.imageContent}>
         <Text style={styles.detailTitle}>{params.image.title}</Text>
 
-        <TouchableOpacity style={styles.favoriteButton}>
-          <MaterialIcons name="star-outline" size={24} color="#FFF" />
-        </TouchableOpacity>
+        { isFavorite ? (
+          <TouchableOpacity style={styles.favoriteButton} onPress={handleFavorite}>
+            <MaterialIcons name="star" size={24} color="#FFF" />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity style={styles.favoriteButton} onPress={handleFavorite}>
+            <MaterialIcons name="star-outline" size={24} color="#FFF" />
+          </TouchableOpacity>
+        ) }
+
       </View>
       
       <View style={{ flexDirection: "row", alignItems: "center" }}>

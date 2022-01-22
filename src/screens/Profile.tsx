@@ -11,8 +11,6 @@ export function Profile() {
 
   return (
     <>
-
-
       { isAuthenticated ? (
         <View style={styles.container}>
           <Image
