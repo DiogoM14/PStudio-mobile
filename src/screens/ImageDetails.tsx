@@ -9,10 +9,6 @@ export function ImageDetails() {
   const [image, setImage] = useState<IImage>()
   const { params } = useRoute()
 
-  useEffect(() => {
-    console.log(params)
-  }, [])
-
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.detailHeader}>
@@ -40,7 +36,7 @@ export function ImageDetails() {
         <Text style={styles.detailTitle}>{params.image.title}</Text>
 
         <TouchableOpacity style={styles.favoriteButton}>
-          <MaterialIcons name="favorite-outline" size={24} color="#FFF" />
+          <MaterialIcons name="star-outline" size={24} color="#FFF" />
         </TouchableOpacity>
       </View>
       

@@ -1,20 +1,38 @@
 import { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 
-import { Ionicons, FontAwesome5, MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 import { ICategories } from "../utils/ICategories";
 
-import { Header2 } from "../components/Home/Header2";
 import { AllCategoryButtons } from "../components/AllCategoryButtons";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { Feather, Ionicons } from "@expo/vector-icons";
+import { api } from "../service/axios";
 
 export function AllCategories() {
     const [categories, setCategories] = useState<string[]>([])
 
-    return (
-        <ScrollView
-            style={styles.container}>
+    useEffect(() => {
+        api
+        .get("/categories")
+        .then((response) => setCategories(response.data))
+        .catch((err) => {
+        console.error("ops! ocorreu um erro " + err)
+        })
+    }, []);
 
-            <Header2 />
+    return (
+        <ScrollView style={styles.container}>
+            <TouchableOpacity style={styles.bigButton} activeOpacity={0.7}>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Ionicons name="layers" size={42} color="#fff" />
+                    <Text style={styles.bigButtonText}>Destaques</Text>
+                </View>
+
+                <View style={styles.bigButtonDecorator}>
+                    <Feather name="chevron-right" size={24} color="#fff" />
+                </View>
+            </TouchableOpacity>
+
             <AllCategoryButtons categories={categories} />
 
         </ScrollView>
@@ -26,30 +44,26 @@ const styles = StyleSheet.create({
         backgroundColor: '#F0F4F4',
         paddingHorizontal: 24,
     },
-    grid: {
-        flexDirection: "column",
+    bigButton: {
         width: "100%",
-    },
-    title: {
-        marginBottom: 15,
-        marginTop: 16,
-        fontFamily: "Roboto_500Medium",
-        fontSize: 22,
-    },
-    button: {
-        display: "flex",
+        height: 100,
         backgroundColor: "#14387B",
-        borderRadius: 8,
-        height: 45,
-        width: "47%",
-        marginBottom: 8,
-        paddingHorizontal: 10,
-
-        justifyContent: "space-between",
+        alignItems: 'center',
+        borderRadius: 10,
         flexDirection: "row",
-        alignItems: "center",
+        justifyContent: "space-between",
+        paddingHorizontal: 36,
+        marginTop: 24,
     },
-    buttonText: {
-        color: "#FFF",
+    bigButtonText:{
+        marginLeft: 6,
+        color: "#fff",
+        fontFamily: "Roboto_500Medium",
+        fontSize: 20
+    },
+    bigButtonDecorator:{
+        backgroundColor: "#3159a5",
+        borderRadius: 11,
+        padding: 4
     }
 });

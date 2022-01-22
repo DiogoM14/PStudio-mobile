@@ -7,10 +7,6 @@ export function CategoryDetail() {
     const [categories, setCategories] = useState<ICategories>()
     const { params } = useRoute()
 
-    useEffect(() => {
-        setCategories(params)
-    }, [])
-
     return (
         <View>
             <Text>cheguei</Text>

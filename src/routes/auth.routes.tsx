@@ -21,7 +21,7 @@ export function AuthRoutes() {
       <Screen name="Welcoming" component={WelcomingScreen} />
       <Screen name="ImageDetails" component={ImageDetails} options={{
         headerShown: true,
-        title: "Categorias",
+        title: "Detalhes da imagem",
         headerStyle: {
           backgroundColor: '#F0F4F4',
         },
