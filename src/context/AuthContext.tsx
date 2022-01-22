@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from "react"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { api } from "../service/axios";
-import { useNavigation } from "@react-navigation/native";
 
 type User = {
     _id: string

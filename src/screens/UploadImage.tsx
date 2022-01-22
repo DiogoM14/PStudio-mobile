@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Button, Image, ScrollView } from "react-native";
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ScrollView } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { useForm, Controller } from "react-hook-form";
 
@@ -11,6 +11,7 @@ import { ref, storage, uploadBytesResumable, getDownloadURL } from '../service/f
 import { api } from "../service/axios";
 import { AuthContext } from "../context/AuthContext";
 
+import DropDownPicker from 'react-native-dropdown-picker'
 
 export function UploadImage() {  
   const { navigate } = useNavigation()
@@ -46,6 +47,13 @@ export function UploadImage() {
       setToken(token)
     }).catch(err => console.log("Dá login" + err))
   },[])
+
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState<any>(null);
+  const [items, setItems] = useState([
+    {label: 'Apple', value: 'apple'},
+    {label: 'Banana', value: 'banana'}
+  ]);
 
   async function onSubmit(data: any) {
     const response = await fetch(image);
@@ -185,12 +193,14 @@ export function UploadImage() {
           maxLength: 100,
           }}
           render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              placeholder="Tipo de Imagem"
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
+            <DropDownPicker
+              open={open}
               value={value}
+              items={items}
+              setOpen={setOpen}
+              setValue={setValue}
+              setItems={setItems}
+              style={[styles.input, { borderWidth: 0 }]}
             />
           )}
           name="imageType"
@@ -202,12 +212,14 @@ export function UploadImage() {
           maxLength: 100,
           }}
           render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              placeholder="Categoria"
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
+            <DropDownPicker
+              open={open}
               value={value}
+              items={items}
+              setOpen={setOpen}
+              setValue={setValue}
+              setItems={setItems}
+              style={[styles.input, { borderWidth: 0 }]}
             />
           )}
           name="category"

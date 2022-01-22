@@ -6,9 +6,12 @@ import { Profile } from "../screens/Profile";
 import { UploadImage } from "../screens/UploadImage";
 import { ForYou } from "../screens/ForYou";
 import { Favorites } from "../screens/Favorites";
+import { AuthContext } from "../context/AuthContext";
+import { useContext } from "react";
 
 export function BottomNavigator() {
   const { Navigator, Screen } = createBottomTabNavigator();
+  const { user } = useContext(AuthContext);
 
   return (
     <>
@@ -35,24 +38,28 @@ export function BottomNavigator() {
             }
           }}
         />
-        <Screen
-          name="UploadImage"
-          component={UploadImage}
-          options={{
-            tabBarIcon: ({ color, size, focused }) => {
-              return (
-                <Ionicons name={focused ? 'add-circle' : 'add-circle-outline'} size={32} color={focused ? '#14387B' : color} />
-              );
-            }
-          }}
-        />
+
+        { user?.userType === 'admin' && (
+          <Screen
+            name="UploadImage"
+            component={UploadImage}
+            options={{
+              tabBarIcon: ({ color, size, focused }) => {
+                return (
+                  <Ionicons name={focused ? 'add-circle' : 'add-circle-outline'} size={32} color={focused ? '#14387B' : color} />
+                );
+              }
+            }}
+          />
+        ) }
+        
         <Screen
           name="Favorites"
           component={Favorites}
           options={{
             tabBarIcon: ({ color, size, focused }) => {
               return (
-                <Ionicons name={focused ? 'heart' : 'heart-outline'} size={32} color={focused ? '#14387B' : color} />
+                <Ionicons name={focused ? 'star' : 'star-outline'} size={32} color={focused ? '#14387B' : color} />
               );
             }
           }}

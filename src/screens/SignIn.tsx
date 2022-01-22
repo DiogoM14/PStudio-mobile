@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Controller, useForm } from "react-hook-form";
 import { Feather } from "@expo/vector-icons";
@@ -12,7 +12,11 @@ interface FormProps {
 
 export function SignIn() {
   const { navigate, goBack } = useNavigation()
-  const { signIn } = useContext(AuthContext)
+  const { signIn, isAuthenticated } = useContext(AuthContext)
+
+  useEffect(() => {
+    isAuthenticated && navigate("BottomNavigator" as never)
+  }, [isAuthenticated])
 
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
@@ -22,9 +26,7 @@ export function SignIn() {
   });
 
   function onSubmit({ email, password }: FormProps) {
-    signIn({ email, password }).then(() => {
-      navigate("BottomNavigator" as never)
-    })
+    signIn({ email, password })
   }
 
   function handleGoToForgot() {
