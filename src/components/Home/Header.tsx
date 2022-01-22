@@ -8,7 +8,7 @@ export function Header() {
   const { navigate } = useNavigation();
 
   function handleNavigateToLogin() {
-    navigate("SignIn" as never);
+    navigate("Welcoming" as never);
   }
 
   function handleSignOut() {
@@ -28,7 +28,7 @@ export function Header() {
         </TouchableOpacity>
       ) : (
         <TouchableOpacity onPress={handleNavigateToLogin}>
-          <Text>Faça login</Text>
+          <Text>Entrar</Text>
         </TouchableOpacity>
       ) }
 

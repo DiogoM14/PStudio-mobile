@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { useForm, Controller } from "react-hook-form";
 import { Feather } from "@expo/vector-icons";
 
@@ -36,95 +36,100 @@ export function SignUp() {
   }
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity activeOpacity={0.7} onPress={handleGoBack}>
-        <Feather name="arrow-left" size={24} color="#303030" style={{ marginBottom: 16 }} />
-      </TouchableOpacity>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <View style={styles.container}>
+        <TouchableOpacity activeOpacity={0.7} onPress={handleGoBack}>
+          <Feather name="arrow-left" size={24} color="#303030" style={{ marginBottom: 16 }} />
+        </TouchableOpacity>
 
-      <View>
-        <Text style={styles.title}>Vamos entrar.</Text>
-        <Text style={styles.subtitle}>Bem vindo de volta.</Text>
-        <Text style={styles.subtitle}>Sentimos a tua falta!</Text>
+        <View>
+          <Text style={styles.title}>Vamos entrar.</Text>
+          <Text style={styles.subtitle}>Bem vindo de volta.</Text>
+          <Text style={styles.subtitle}>Sentimos a tua falta!</Text>
+        </View>
+
+        <ScrollView style={styles.inputGroup}>
+          <Controller
+            control={control}
+            rules={{
+            required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                placeholder="Primeiro Nome"
+                style={styles.input}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name="firstName"
+          />
+          {errors.firstName && <Text>This is required.</Text>}
+
+          <Controller
+            control={control}
+            rules={{
+            required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                placeholder="Apelido"
+                style={styles.input}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name="lastName"
+          />
+          {errors.firstName && <Text>This is required.</Text>}
+
+          <Controller
+            control={control}
+            rules={{
+            required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                placeholder="E-mail"
+                style={styles.input}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name="email"
+          />
+          {errors.firstName && <Text>This is required.</Text>}
+
+          <Controller
+            control={control}
+            rules={{
+            maxLength: 100,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                placeholder="Password"
+                style={styles.input}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                secureTextEntry={true}
+              />
+            )}
+            name="password"
+          />
+        </ScrollView>
+
+        <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
+          <Text style={styles.buttonText}>Registar</Text>
+        </TouchableOpacity>
       </View>
-
-      <ScrollView style={styles.inputGroup}>
-        <Controller
-          control={control}
-          rules={{
-          required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              placeholder="Primeiro Nome"
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="firstName"
-        />
-        {errors.firstName && <Text>This is required.</Text>}
-
-        <Controller
-          control={control}
-          rules={{
-          required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              placeholder="Apelido"
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="lastName"
-        />
-        {errors.firstName && <Text>This is required.</Text>}
-
-        <Controller
-          control={control}
-          rules={{
-          required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              placeholder="E-mail"
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="email"
-        />
-        {errors.firstName && <Text>This is required.</Text>}
-
-        <Controller
-          control={control}
-          rules={{
-          maxLength: 100,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              placeholder="Password"
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              secureTextEntry={true}
-            />
-          )}
-          name="password"
-        />
-      </ScrollView>
-
-      <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
-        <Text style={styles.buttonText}>Registar</Text>
-      </TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 

@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Controller, useForm } from "react-hook-form";
@@ -40,75 +40,81 @@ export function SignIn() {
   }
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity activeOpacity={0.7} onPress={handleGoBack}>
-        <Feather name="arrow-left" size={24} color="#303030" style={{ marginBottom: 16 }} />
-      </TouchableOpacity>
 
-      <View>
-        <Text style={styles.title}>Vamos entrar.</Text>
-        <Text style={styles.subtitle}>Bem vindo de volta.</Text>
-        <Text style={styles.subtitle}>Sentimos a tua falta!</Text>
-      </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <View style={styles.container}>
+        <TouchableOpacity activeOpacity={0.7} onPress={handleGoBack}>
+          <Feather name="arrow-left" size={24} color="#303030" style={{ marginBottom: 16 }} />
+        </TouchableOpacity>
 
-      <View style={styles.inputGroup}>
-        <Controller
-          control={control}
-          rules={{
-          required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput 
-              keyboardType="email-address"
-              style={styles.input}
-              placeholder="E-mail" 
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="email"
-        />
+        <View>
+          <Text style={styles.title}>Vamos entrar.</Text>
+          <Text style={styles.subtitle}>Bem vindo de volta.</Text>
+          <Text style={styles.subtitle}>Sentimos a tua falta!</Text>
+        </View>
 
-        <Controller
-          control={control}
-          rules={{
-          required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput 
-              style={styles.input}
-              placeholder="Palavra-passe" 
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              secureTextEntry={true}
-            />
-          )}
-          name="password"
-        />
-      </View>
-      <View style={styles.bottomSection}>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.goToRegister}>Esqueceu-se da palavra passe?</Text>
-          <TouchableOpacity onPress={handleGoToForgot}>
-            <Text style={[styles.goToRegister, { fontFamily: "Roboto_500Medium" }]}>Recuperar</Text>
+        <View style={styles.inputGroup}>
+          <Controller
+            control={control}
+            rules={{
+            required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput 
+                keyboardType="email-address"
+                style={styles.input}
+                placeholder="E-mail" 
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name="email"
+          />
+
+          <Controller
+            control={control}
+            rules={{
+            required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput 
+                style={styles.input}
+                placeholder="Palavra-passe" 
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                secureTextEntry={true}
+              />
+            )}
+            name="password"
+          />
+        </View>
+        <View style={styles.bottomSection}>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.goToRegister}>Esqueceu-se da palavra passe?</Text>
+            <TouchableOpacity onPress={handleGoToForgot}>
+              <Text style={[styles.goToRegister, { fontFamily: "Roboto_500Medium" }]}>Recuperar</Text>
+            </TouchableOpacity>
+          </View>
+
+          <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
+            <Text style={styles.buttonText}>Entrar</Text>
+          </TouchableOpacity>
+
+          <View style={styles.divider}>
+            <Text>ou</Text>
+          </View>
+
+          <TouchableOpacity style={styles.guestButton} onPress={handleGoToHome}>
+            <Text style={styles.guestButtonText}>Entrar como convidado</Text>
           </TouchableOpacity>
         </View>
-
-        <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
-          <Text style={styles.buttonText}>Entrar</Text>
-        </TouchableOpacity>
-
-        <View style={styles.divider}>
-          <Text>ou</Text>
-        </View>
-
-        <TouchableOpacity style={styles.guestButton} onPress={handleGoToHome}>
-          <Text style={styles.guestButtonText}>Entrar como convidado</Text>
-        </TouchableOpacity>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 
