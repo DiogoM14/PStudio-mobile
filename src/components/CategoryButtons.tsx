@@ -11,26 +11,26 @@ export function CategoryButtons({ categories }: ICategories) {
     navigate("AllCategories" as never)
   }
 
-  function handleGoToCategoryDetail() {
-    navigate({
-      name: "CategoryDetail" as never,
-      params: {
-        categories: categories
-      } as never
-    })
-  }
+  function handleGoToCategoryDetail(category: string) {
+      navigate({
+        name: "CategoryDetail" as never,
+        params: {
+          categories: category
+        } as never
+      })
+    }
 
   return (
     <View style={styles.grid}>
       <Text style={styles.title}>Categorias</Text>
 
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <TouchableOpacity style={styles.button} activeOpacity={0.7} onPress={handleGoToCategoryDetail}>
+        <TouchableOpacity style={styles.button} activeOpacity={0.7} onPress={() => handleGoToCategoryDetail("nature")}>
           <Text style={styles.buttonText}>Natureza</Text>
           <Ionicons name="leaf" size={20} color="white" />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} activeOpacity={0.7} onPress={handleGoToCategoryDetail}>
+        <TouchableOpacity style={styles.button} activeOpacity={0.7} onPress={() => handleGoToCategoryDetail("animals")}>
           <Text style={styles.buttonText}>Animais</Text>
           <MaterialCommunityIcons name="cow" size={24} color="white" />
         </TouchableOpacity>
@@ -38,7 +38,7 @@ export function CategoryButtons({ categories }: ICategories) {
       </View>
 
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <TouchableOpacity style={styles.button} activeOpacity={0.7} onPress={handleGoToCategoryDetail}>
+        <TouchableOpacity style={styles.button} activeOpacity={0.7} onPress={() => handleGoToCategoryDetail("history")}>
           <Text style={styles.buttonText}>História</Text>
           <FontAwesome5 name="monument" size={20} color="white" />
         </TouchableOpacity>

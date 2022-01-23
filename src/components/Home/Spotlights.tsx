@@ -1,27 +1,34 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Image, StyleSheet, View } from "react-native"
 import TimedSlideshow from 'react-native-timed-slideshow'
+import { IImage } from "../../utils/IImage"
 
-export function Spotlights() {
+interface Props {
+  images: IImage[]
+}
+
+export function Spotlights({ images }: Props) {
   const [items, setItems] = useState<any>([
-    {
-      uri: "http://www.lovethemountains.co.uk/wp-content/uploads/2017/05/New-Outdoor-Sports-and-Music-Festival-For-Wales-4.jpg",
-      title: "Michael Malik",
-      text: "Minnesota, USA",
-    },
-    {
-      uri: "http://blog.adrenaline-hunter.com/wp-content/uploads/2018/05/bungee-jumping-barcelona-1680x980.jpg",
-      title: "Victor Fallon",
-      text: "Val di Sole, Italy",
-      duration: 3000
-    },
-    {
-        uri: "https://greatist.com/sites/default/files/Running_Mountain.jpg",
-        title: "Mary Gomes",
-        text: "Alps",
-        fullWidth: true
-    }
+    { uri: "https://images.unsplash.com/photo-1543599538-a6c4f6cc5c05?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80", title: "Bem vindo", description: "A sua galeria de preferência" }
   ])
+
+  useEffect(() => {
+    if (images[0] != undefined) {
+      setItems([{
+        uri: images[0].imageCDN,
+        title: images[0].title,
+        text: images[0].description,
+      }, {
+        uri: images[1].imageCDN,
+        title: images[1].title,
+        text: images[1].description,
+      }, {
+        uri: images[2].imageCDN,
+        title: images[2].title,
+        text: images[2].description,
+      }])
+    }
+  }, [images])
 
   return (
     <View style={styles.container}>

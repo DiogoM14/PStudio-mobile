@@ -52,7 +52,7 @@ export function Home() {
     >
       <Header />
 
-      <Spotlights />
+      <Spotlights images={images} />
 
       <CategoryButtons categories={categories} />
 

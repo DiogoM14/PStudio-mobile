@@ -10,12 +10,18 @@ import { Ionicons } from '@expo/vector-icons'
 import { ref, storage, uploadBytesResumable, getDownloadURL } from '../service/firebase'
 import { api } from "../service/axios";
 import { AuthContext } from "../context/AuthContext";
+import { Categories } from '../utils/DropdownCategories'
 
-import DropDownPicker from 'react-native-dropdown-picker'
+// import DropDownPicker from 'react-native-dropdown-picker'
+import SelectDropdown from 'react-native-select-dropdown'
 
 export function UploadImage() {  
   const { navigate } = useNavigation()
   const { user } = useContext(AuthContext);
+  const [image, setImage] = useState<any>();
+  const [token, setToken] = useState<any>(null);
+  const [imageType, setImageType] = useState()
+  const [imageCategory, setImageCategory] = useState<any>([])
   
   const { control, handleSubmit, formState: { errors }, reset } = useForm({
     defaultValues: {
@@ -29,8 +35,11 @@ export function UploadImage() {
     }
   });
 
-  const [image, setImage] = useState<any>();
-  const [token, setToken] = useState<any>(null);
+  useEffect(() => {
+    AsyncStorage.getItem('@token').then(token => {
+      setToken(token)
+    }).catch(err => console.log("Dá login" + err))
+  },[])
 
   const pickImage = async () => {
     let result: any = await ImagePicker.launchImageLibraryAsync({
@@ -38,22 +47,12 @@ export function UploadImage() {
       allowsEditing: true,
       quality: 1,
     })
-
-    setImage(result.uri)
   };
 
-  useEffect(() => {
-    AsyncStorage.getItem('@token').then(token => {
-      setToken(token)
-    }).catch(err => console.log("Dá login" + err))
-  },[])
-
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<any>(null);
-  const [items, setItems] = useState([
-    {label: 'Apple', value: 'apple'},
-    {label: 'Banana', value: 'banana'}
-  ]);
+  function deleteCategory(category: string) {
+    imageCategory.splice(imageCategory.indexOf(category), 1)
+    setImageCategory(imageCategory)
+  }
 
   async function onSubmit(data: any) {
     const response = await fetch(image);
@@ -62,17 +61,22 @@ export function UploadImage() {
     await uploadBytesResumable(storageRef, blob);
     await getDownloadURL(storageRef).then(async (res) => {
 
+      const tags = data.tags.split(",").map((tag: string) => tag.trim().toLowerCase());
+      const imageType = data.imageType.toLowerCase()
+
       const newImage = {
         title: data.title,
         description: data.description,
-        category: [data.category],
-        tags: data.tags,
+        category: imageCategory,
+        tags: tags,
         price: data.price,
         year: data.year,
-        imageType: data.imageType,
+        imageType: imageType,
         imageCDN: res,
         author: user._id
-      }
+      } 
+
+      console.log(newImage)
           
       await api.post('/admin/images', newImage, {
         headers: {
@@ -193,14 +197,29 @@ export function UploadImage() {
           maxLength: 100,
           }}
           render={({ field: { onChange, onBlur, value } }) => (
-            <DropDownPicker
-              open={open}
-              value={value}
-              items={items}
-              setOpen={setOpen}
-              setValue={setValue}
-              setItems={setItems}
-              style={[styles.input, { borderWidth: 0 }]}
+            <SelectDropdown
+              data={["Real", "Digital"]}
+              buttonStyle={{ 
+                width: "100%",
+                height: 44,
+                backgroundColor: "#fff",
+                marginBottom: 16,
+                paddingHorizontal: 12,
+                borderRadius: 8,
+               }}
+              onSelect={(selectedItem, index) => {
+                setImageType(selectedItem)
+              }}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                // text represented after item is selected
+                // if data array is an array of objects then return selectedItem.property to render after item is selected
+                return selectedItem
+              }}
+              rowTextForSelection={(item, index) => {
+                // text represented for each item in dropdown
+                // if data array is an array of objects then return item.property to represent item in dropdown
+                return item
+              }}
             />
           )}
           name="imageType"
@@ -212,18 +231,46 @@ export function UploadImage() {
           maxLength: 100,
           }}
           render={({ field: { onChange, onBlur, value } }) => (
-            <DropDownPicker
-              open={open}
-              value={value}
-              items={items}
-              setOpen={setOpen}
-              setValue={setValue}
-              setItems={setItems}
-              style={[styles.input, { borderWidth: 0 }]}
+            <SelectDropdown
+              data={Categories}
+              
+              buttonStyle={{ 
+                width: "100%",
+                height: 44,
+                backgroundColor: "#fff",
+                marginBottom: 16,
+                paddingHorizontal: 12,
+                borderRadius: 8,
+               }}
+
+              onSelect={(selectedItem, index) => {
+                setImageCategory([...imageCategory, selectedItem])
+              }}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                // text represented after item is selected
+                // if data array is an array of objects then return selectedItem.property to render after item is selected
+                return "Adicione categoria"
+              }} 
+              rowTextForSelection={(item, index) => {
+                // text represented for each item in dropdown
+                // if data array is an array of objects then return item.property to represent item in dropdown
+                return item
+              }}
             />
           )}
           name="category"
         />
+
+        { imageCategory && (
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {imageCategory.map((category: string) => (
+              <TouchableOpacity style={styles.categoriesBox} onPress={() => deleteCategory(category)}>
+                <Text>{category}</Text>
+                <Text>  x</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        ) }
 
         <TouchableOpacity style={styles.uploadButton} onPress={pickImage}>
           <Text style={styles.buttonText}>Escolher imagem</Text>
@@ -302,5 +349,14 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 8,
     marginBottom: 16,
+  },
+  categoriesBox: {
+    flexDirection: "row",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    backgroundColor: "#fff",
+    borderRadius: 4,
+    marginRight: 8,
+    marginBottom: 16
   }
 })
