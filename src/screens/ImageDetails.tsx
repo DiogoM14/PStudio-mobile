@@ -1,32 +1,36 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRoute } from "@react-navigation/native";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StyleSheet, View, Image, Text, ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { api } from "../service/axios";
 import { IImage } from "../utils/IImage";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AxiosError } from "axios";
+import { AuthContext } from "../context/AuthContext";
 
 export function ImageDetails() {
   const [isFavorite, setIsFavorite] = useState(false)
   const { params } = useRoute()
+  const { isAuthenticated } = useContext(AuthContext)
 
   useEffect(() => {
-    AsyncStorage.getItem('@token').then((token: any) => {
-      api.get("/me/images/favorites",  { 
-        headers: {
-          "x-access-token" : token
-        } 
-      }).then(res => {
-            res.data.flat()[0].favorites.forEach((image: any) => {
-              if(image._id == params.image._id ) {
-                setIsFavorite(true)
-              }
-            });
-          }
-        )
-    })
+    isAuthenticated && (
+      AsyncStorage.getItem('@token').then((token: any) => {
+        api.get("/me/images/favorites",  { 
+          headers: {
+            "x-access-token" : token
+          } 
+        }).then(res => {
+              res.data.flat()[0].favorites.forEach((image: any) => {
+                if(image._id == params.image._id ) {
+                  setIsFavorite(true)
+                }
+              });
+            }
+          )
+      })
+    )
   }, [])
 
   function handleFavorite() {
@@ -68,14 +72,16 @@ export function ImageDetails() {
       <View style={styles.imageContent}>
         <Text style={styles.detailTitle}>{params.image.title}</Text>
 
-        { isFavorite ? (
-          <TouchableOpacity style={styles.favoriteButton} onPress={handleFavorite}>
-            <MaterialIcons name="star" size={24} color="#FFF" />
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity style={styles.favoriteButton} onPress={handleFavorite}>
-            <MaterialIcons name="star-outline" size={24} color="#FFF" />
-          </TouchableOpacity>
+        { isAuthenticated && (
+          isFavorite ? (
+            <TouchableOpacity style={styles.favoriteButton} onPress={handleFavorite}>
+              <MaterialIcons name="star" size={24} color="#FFF" />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity style={styles.favoriteButton} onPress={handleFavorite}>
+              <MaterialIcons name="star-outline" size={24} color="#FFF" />
+            </TouchableOpacity>
+          ) 
         ) }
 
       </View>

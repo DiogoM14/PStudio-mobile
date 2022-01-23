@@ -27,7 +27,6 @@ export function SignUp() {
           firstName: data.firstName,
           lastName: data.lastName,
           password: data.password,
-          userType: 'user'
       }
       
       await api.post('/auth/register', newUser)

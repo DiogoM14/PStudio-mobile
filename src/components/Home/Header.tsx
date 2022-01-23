@@ -1,3 +1,4 @@
+import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useContext } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -24,7 +25,12 @@ export function Header() {
 
       { user ? (
         <TouchableOpacity onPress={handleSignOut}>
-          <Image style={styles.avatar} source={{ uri: user?.avatar }} />
+          {user.avatar && <Image style={styles.avatar} source={{ uri: user?.avatar }} />}
+          {!user.avatar && (
+            <View style={styles.noAvatar}>
+              <Feather name="user" size={24} />
+            </View>
+          )}
         </TouchableOpacity>
       ) : (
         <TouchableOpacity onPress={handleNavigateToLogin}>
@@ -56,4 +62,12 @@ const styles = StyleSheet.create({
     height: 48,
     borderRadius: 24,
   },
+  noAvatar: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+  }
 })
