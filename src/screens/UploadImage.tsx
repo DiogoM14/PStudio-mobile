@@ -47,8 +47,9 @@ export function UploadImage() {
       allowsEditing: true,
       quality: 1,
     })
-  };
 
+    setImage(result.uri)
+  };
   function deleteCategory(category: string) {
     imageCategory.splice(imageCategory.indexOf(category), 1)
     setImageCategory(imageCategory)
@@ -60,10 +61,10 @@ export function UploadImage() {
     const storageRef = ref(storage, 'images/' + data.title);
     await uploadBytesResumable(storageRef, blob);
     await getDownloadURL(storageRef).then(async (res) => {
-
+      
       const tags = data.tags.split(",").map((tag: string) => tag.trim().toLowerCase());
       const imageType = data.imageType.toLowerCase()
-
+      
       const newImage = {
         title: data.title,
         description: data.description,
@@ -75,9 +76,8 @@ export function UploadImage() {
         imageCDN: res,
         author: user._id
       } 
-
       console.log(newImage)
-          
+      
       await api.post('/admin/images', newImage, {
         headers: {
           'x-access-token': token

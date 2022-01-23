@@ -52,6 +52,20 @@ export function BottomNavigator() {
             }}
           />
         ) }
+
+        { user?.userType === 'designer' && (
+          <Screen
+            name="UploadImage"
+            component={UploadImage}
+            options={{
+              tabBarIcon: ({ color, size, focused }) => {
+                return (
+                  <Ionicons name={focused ? 'add-circle' : 'add-circle-outline'} size={32} color={focused ? '#14387B' : color} />
+                );
+              }
+            }}
+          />
+        ) }
         
         <Screen
           name="Favorites"

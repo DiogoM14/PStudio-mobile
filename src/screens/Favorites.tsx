@@ -74,6 +74,12 @@ export function Favorites() {
           </TouchableOpacity>
         </View>
       )}
+
+      { !images[0]?.imageCDN && (
+        <View style={styles.noFavorites}>
+          <Text style={styles.noFavoritesText}>Sem favoritos para mostrar.</Text>
+        </View>
+      )  }
     </ScrollView>
   )
 }

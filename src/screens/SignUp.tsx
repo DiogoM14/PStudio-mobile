@@ -22,18 +22,19 @@ export function SignUp() {
   });
 
   const onSubmit = async (data: any) => {
-      const newUser = {
-          email: data.email,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          password: data.password,
-      }
-      
-      await api.post('/auth/register', newUser)
-          .then(res => {
-            navigate("SignIn" as never)
-          })
-          .catch(err => console.log(err))
+    const newUser = {
+        avatar: "https://i.ibb.co/Gk7NrCC/avatar.png",
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        password: data.password,
+    }
+    
+    await api.post('/auth/register', newUser)
+        .then(res => {
+          navigate("SignIn" as never)
+        })
+        .catch(err => console.log(err))
   }
 
   return (
