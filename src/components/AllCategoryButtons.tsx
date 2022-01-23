@@ -1,13 +1,24 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Ionicons, FontAwesome5, MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 import { ICategories } from "../utils/ICategories";
 import { AllCategories } from '../utils/allCategories'
+import { useNavigation } from "@react-navigation/native";
 
 export function AllCategoryButtons({ categories }: ICategories) {
+    const { navigate } = useNavigation()
+
+    function handleGoToCategoryDetail(category: string) {
+        navigate({
+          name: "CategoryDetail" as never,
+          params: {
+            categories: category
+          } as never
+        })
+      }
+
     return (
         <View style={styles.container}>
             { AllCategories.map((category) => (
-                <TouchableOpacity style={styles.button} activeOpacity={0.7}>
+                <TouchableOpacity key={category.name} style={styles.button} activeOpacity={0.7} onPress={() => handleGoToCategoryDetail(category.name)}>
                     <Text style={styles.buttonText}>{category.name}</Text>
                 </TouchableOpacity>
             ))}

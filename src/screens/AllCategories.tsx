@@ -7,9 +7,11 @@ import { AllCategoryButtons } from "../components/AllCategoryButtons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { api } from "../service/axios";
+import { useNavigation } from "@react-navigation/native";
 
 export function AllCategories() {
     const [categories, setCategories] = useState<string[]>([])
+    const { navigate } = useNavigation()
 
     useEffect(() => {
         api
@@ -20,9 +22,13 @@ export function AllCategories() {
         })
     }, []);
 
+    function handleGoToForYou() {
+        navigate('ForYou' as never)
+    }
+
     return (
         <ScrollView style={styles.container}>
-            <TouchableOpacity style={styles.bigButton} activeOpacity={0.7}>
+            <TouchableOpacity style={styles.bigButton} activeOpacity={0.7} onPress={handleGoToForYou}>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Ionicons name="layers" size={42} color="#fff" />
                     <Text style={styles.bigButtonText}>Destaques</Text>

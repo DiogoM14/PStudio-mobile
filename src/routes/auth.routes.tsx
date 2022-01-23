@@ -37,7 +37,13 @@ export function AuthRoutes() {
           backgroundColor: '#F0F4F4',
         },
       }} />
-      <Screen name="CategoryDetail" component={CategoryDetail} />
+      <Screen name="CategoryDetail" component={CategoryDetail} options={{
+        headerShown: true,
+        title: "Detalhes da categoria",
+        headerStyle: {
+          backgroundColor: '#F0F4F4',
+        },
+      }} />
     </Navigator>
   )
 }

@@ -1,12 +1,16 @@
-import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { Dimensions, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { api } from "../service/axios";
 import { ImageCard } from "../components/ImageCard";
+import Carousel from 'react-native-snap-carousel';
+
+const screen = Dimensions.get("screen");
 
 export function ForYou() {
   const [images, setImages] = useState([]);
-  const [query, setQuery] = useState<any>([]);
+  const [query, setQuery] = useState<any>("");
+  const [dimensions, setDimensions] = useState({ screen });
 
   useEffect(() => {
     api.get(`/search?tags=${query.replace(/\s/g, "")}`).then((res) => {
@@ -14,6 +18,16 @@ export function ForYou() {
     });
 
   }, [query]);
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener(
+      "change",
+      ({ screen }) => {
+        setDimensions({ screen });
+      }
+    );
+    return () => subscription?.remove();
+  });
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -28,9 +42,16 @@ export function ForYou() {
       </View>
 
       { images.length > 0 ? (
-        images.map((image: any) => (
-          <ImageCard key={image.imageCDN} image={image} />
-        ))
+        <Carousel
+          layout="stack"
+          data={images}
+          renderItem={
+            ({ item }) => <ImageCard image={item} />
+          }
+          sliderWidth={dimensions.screen.width - 32}
+          itemWidth={dimensions.screen.width - 32}
+        />
+
       ) : (
         <View style={{ alignItems: "center" }}>
           <Text style={styles.noImages}>Sem imagens</Text>
